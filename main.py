@@ -15,7 +15,7 @@ def citire_lista():
     return result_list
 
 
-def is_prime(n):
+def is_prime(n: int) -> int:
     '''
     Funcția verifică dacă un număr este prim.
     :param n: numărul care se verifică
@@ -66,7 +66,7 @@ def nr_divizori(n: int) -> int:
         return 1
     divizori = 2
     i = 2
-    while i ** 2< n:
+    while i ** 2 < n:
         if n % i == 0:
             divizori += 2
         i += 1
@@ -97,25 +97,41 @@ def get_longest_same_div_count(lst: list[int]) -> list[int]:
     return secventa_max
 
 
-def get_longest_same_div_count(lst: list[int]) -> list[int]:
+###################################
+#Problema din timpul laboratorului#
+###################################
+def is_palindrome(number: int) -> int:
+    temp = number
+    reverse_num = 0
+    while number > 0:
+        digit = number % 10
+        reverse_num = reverse_num * 10 + digit
+        number = number // 10
+    if temp == reverse_num:
+        return True
+    else:
+        return False
+
+
+def get_longest_all_palindromes(lst: list[int]) -> list[int]:
     '''
-    Verifică toate secventele posibile dintr-o listă și evaluează dacă toate elementele unei
-    secvențe .... Compară secvențele ce conțin doar elemente ... și o afișează pe cea mai lungă.
+    Verifică toate secventele posibile dintr-o listă și evaluează dacă toate elementele unei secvențe sunt
+    toate palindromuri. Compară secvențele ce conțin doar elemente palindromuri și o afișează pe cea mai lungă.
     :param lst: lista ale carei secvente sunt verificate
-    :return: cea mai lungă secventa ce conține doar elemente ...
+    :return: cea mai lungă secventa ce conține doar elemente palindromuri
     '''
     secventa_max = []
     for start in range(0, len(lst)):
         for end in range(start + 1, len(lst)+1):
-            ... = True
-            ... = ...(lst[start])
+            only_palindromes = True
             for element in lst[start: end]:
-                if ...(element) != ...:
-                    ... = False
-            if ...:
+                if is_palindrome(element) is False:
+                    only_palindromes = False
+            if only_palindromes:
                 if len(lst[start: end]) > len(secventa_max):
                     secventa_max = lst[start: end]
     return secventa_max
+##############################
 
 
 def test_get_longest_all_primes():
@@ -133,42 +149,48 @@ def test_get_longest_same_div_count():
     assert get_longest_same_div_count([11, 13, 17, 6, 8, 1]) == [11, 13, 17]
 
     
-'''def test_get_()
-    assert get_([]) == []
-    assert get_([]) == []
-    assert get_([]) == []
-    assert get_([]) == []
-    assert get_([]) == []
-    assert get_([]) == []
-'''
+def test_get_longest_all_palindromes():
+    assert get_longest_all_palindromes([121, 234, 232, 111]) == [121]
+    assert get_longest_all_palindromes([53344335, 2332, 121, 3233, 989]) == [53344335, 2332, 121]
 
 
 def main():
     while True:
-        print("Acest program determină dintr-o listă cea mai lungă secvență în care: ")
-        print("1. Toate numerele sunt prime.")
-        print("2. Toate numerele au același număr de divizori.")
-        print("3. Toate numerele ...")
+        print("1. Introdu lista")
+        print("2. Cea mai lungă secvență în care toate numerele sunt prime.")
+        print("3. Cea mai lungă secvență în care toate numerele au același număr de divizori.")
+        print("4. Cea mai lungă secvență în care toate numerele sunt palindromuri")
         print('')
         print("x. Încheie programul")
-        lista = []
         optiune = input("Alege opțiunea: ")
         if optiune == '1':
             lista = citire_lista()
-            lista_max_prime = get_longest_all_primes(lista)
-            print(f"Cea mai lungă secvență de numere prime este: {lista_max_prime}")
+            print(f"Lista citita este {lista}")
             print('')
 
         elif optiune == '2':
-            lista = citire_lista()
-            lista_max_acelasi_nr_div = get_longest_same_div_count(lista)
-            print(f"Cea mai lungă secvență de numere cu număr identic de divizori este: {lista_max_acelasi_nr_div}")
-            print('')
+            if lista != []:
+                lista_max_prime = get_longest_same_div_count(lista)
+                print(f"Cea mai lungă secvență de numere cu toate numerele prime: {lista_max_prime}")
+                print('')
+            else:
+                print("Apasă 1 și Enter pentru a introduce lista")
 
         elif optiune == '3':
-            lista = citire_lista()
-            print("Cea mai lungă secvență de numere... este: ")
-            print('')
+            if lista != []:
+                lista_max_acelasi_nr_div = get_longest_same_div_count(lista)
+                print(f"Cea mai lungă secvență de numere cu număr identic de divizori este: {lista_max_acelasi_nr_div}")
+                print('')
+            else:
+                print("Apasă 1 și Enter pentru a introduce lista")
+
+        elif optiune == '4':
+            if lista != []:
+                lista_max_palidromuri = get_longest_all_palindromes(lista)
+                print(f"Cea mai lungă secvență de numere cu numere palindromuri este: {lista_max_palidromuri}")
+                print('')
+            else:
+                print("Apasă 1 și Enter pentru a introduce lista")
 
         elif optiune == 'x':
             break
@@ -176,5 +198,5 @@ def main():
 
 test_get_longest_all_primes()
 test_get_longest_same_div_count()
-'''test_get_()'''
+test_get_longest_all_palindromes()
 main()
